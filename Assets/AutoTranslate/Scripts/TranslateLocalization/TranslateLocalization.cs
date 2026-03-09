@@ -150,6 +150,7 @@ namespace EqualchanceGames.Tools.AutoTranslate
                             {
                                 word = word.Replace("{" + keyValuePair.Key + "}", "{" + keyValuePair.Value + "}");
                             }
+                            if (String.IsNullOrEmpty(word)) continue;
                             Undo.RecordObject(targetLanguageTable, "AddEntry for StringTable (AutoTranslate)");
                             targetLanguageTable.AddEntry(item.Key, word);
                         }
