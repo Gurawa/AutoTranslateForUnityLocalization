@@ -1,4 +1,4 @@
-﻿using EqualchanceGames.Tools.Helpers;
+using EqualchanceGames.Tools.Helpers;
 using EqualchanceGames.Tools.InterfaceTranslate;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -22,9 +22,9 @@ namespace EqualchanceGames.Tools.InterfaceTranslate
         private const String SEPARATE_STRING4 = "[⨉]";
         private const String SEPARATE_STRING5 = "[𓀀]";
 
-		private Dictionary<string, string> _ignoreLocale;
+        private Dictionary<string, string> _ignoreLocale;
 
-        public GoogleApiFree() 
+        public GoogleApiFree()
         {
             _ignoreLocale = new Dictionary<string, string>();
             //_ignoreLocale.Add("en-gb", "en-gb");
@@ -34,8 +34,8 @@ namespace EqualchanceGames.Tools.InterfaceTranslate
             _ignoreLocale.Add("zh-tw", "zh-tw");
         }
 
-		public bool CheckService()
-		{
+        public bool CheckService()
+        {
             return WebInformation.CheckService("https://translate.googleapis.com");
         }
 
@@ -47,7 +47,7 @@ namespace EqualchanceGames.Tools.InterfaceTranslate
         public string MappingLocale(string namelocale)
         {
             namelocale = namelocale.ToLower();
-            if ( namelocale.Contains("-") )
+            if (namelocale.Contains("-"))
             {
                 if (_ignoreLocale.ContainsKey(namelocale)) return _ignoreLocale[namelocale];
                 int index = namelocale.IndexOf('-');
@@ -82,47 +82,49 @@ namespace EqualchanceGames.Tools.InterfaceTranslate
 
             if (singleWordTranslation)
             {
-				foreach (var item in words)
-				{
-					translationFromGoogle = RequestToGoogleApi(item.Value, sourceLanguage, targetLanguage, key);
-					respontTranslateGoogle = DeserializeRespont(translationFromGoogle);
-					if (string.IsNullOrEmpty(respontTranslateGoogle.FullRespont) == true) listRespontWords.Add("");
-					else listRespontWords.Add(respontTranslateGoogle.FullRespont);
-				}
-			}
+                foreach (var item in words)
+                {
+                    translationFromGoogle = RequestToGoogleApi(item.Value, sourceLanguage, targetLanguage, key);
+                    respontTranslateGoogle = DeserializeRespont(translationFromGoogle);
+                    if (string.IsNullOrEmpty(respontTranslateGoogle.FullRespont) == true) listRespontWords.Add("");
+                    else listRespontWords.Add(respontTranslateGoogle.FullRespont);
+                }
+            }
             else
             {
-				foreach (var item in words)
-				{
-					string temp = item.Value + SEPARATE_STRING;
-					sourceTryText.Append(temp);
-					if (sourceTryText.Length > MAXCHARS_FORREQUST)
-					{
-						translationFromGoogle = RequestToGoogleApi(sourceTryText.ToString(), sourceLanguage, targetLanguage, key);
-						respontTranslateGoogle = DeserializeRespont(translationFromGoogle);
-						listRespontWords.AddRange(respontTranslateGoogle.FullRespont.Split(SEPARATE_STRING.ToCharArray()).ToList());
-						sourceTryText.Clear();
-						sourceText.Clear();
-					}
-					else
-					{
-						sourceText.Append(temp);
-					}
-				}
+                foreach (var item in words)
+                {
+                    string temp = item.Value + SEPARATE_STRING;
+                    sourceTryText.Append(temp);
 
-				translationFromGoogle = RequestToGoogleApi(sourceText.ToString(), sourceLanguage, targetLanguage);
+                    if (sourceTryText.Length > MAXCHARS_FORREQUST)
+                    {
+                        if (sourceText.Length != 0)
+                        {
+                            translationFromGoogle = RequestToGoogleApi(sourceText.ToString(), sourceLanguage, targetLanguage, key);
+                            respontTranslateGoogle = DeserializeRespont(translationFromGoogle);
+                            listRespontWords.AddRange(SplitResponseWords(respontTranslateGoogle.FullRespont));
+                            sourceText.Clear();
+                        }
 
-				respontTranslateGoogle = DeserializeRespont(translationFromGoogle);
-				string response = respontTranslateGoogle.FullRespont;
-				String[] mass = new String[5];
-				mass[0] = SEPARATE_STRING;
-				mass[1] = SEPARATE_STRING4;
-				mass[2] = SEPARATE_STRING5;
-				mass[3] = SEPARATE_STRING2;
-				mass[4] = SEPARATE_STRING3;
+                        sourceText.Append(temp);
+                        sourceTryText.Clear();
+                        sourceTryText.Append(sourceText);
+                    }
+                    else
+                    {
+                        sourceText.Append(temp);
+                    }
+                }
 
-				listRespontWords.AddRange(response.Split(mass, StringSplitOptions.None).ToList());
-			}
+                if (sourceText.Length != 0)
+                {
+                    translationFromGoogle = RequestToGoogleApi(sourceText.ToString(), sourceLanguage, targetLanguage, key);
+
+                    respontTranslateGoogle = DeserializeRespont(translationFromGoogle);
+                    listRespontWords.AddRange(SplitResponseWords(respontTranslateGoogle.FullRespont));
+                }
+            }
 
             if (listRespontWords.Count != 0 && String.IsNullOrEmpty(listRespontWords[listRespontWords.Count - 1]))
             {
@@ -131,30 +133,45 @@ namespace EqualchanceGames.Tools.InterfaceTranslate
 
             if (listRespontWords.Count != words.Count)
             {
-				foreach (var item in words)
-				{
-					targetWords.Add(item.Key, "");
-				}
-			}
-            else
+                // Fallback to per-word requests if batched parsing lost alignment.
+                listRespontWords.Clear();
+                foreach (var item in words)
+                {
+                    translationFromGoogle = RequestToGoogleApi(item.Value, sourceLanguage, targetLanguage, key);
+                    respontTranslateGoogle = DeserializeRespont(translationFromGoogle);
+                    if (string.IsNullOrEmpty(respontTranslateGoogle.FullRespont) == true) listRespontWords.Add("");
+                    else listRespontWords.Add(respontTranslateGoogle.FullRespont);
+                }
+            }
+
             {
-				int index = 0;
-				foreach (var item in words)
-				{
-     //               string responseWord = listRespontWords[index];
-					//if (item.Value.Length != 0 && responseWord.Length != 0 && )
-					targetWords.Add(item.Key, listRespontWords[index]);
-					++index;
-				}
-			}
-                
+                int index = 0;
+                foreach (var item in words)
+                {
+                    targetWords.Add(item.Key, listRespontWords[index]);
+                    ++index;
+                }
+            }
+
             return targetWords;
+        }
+
+        private List<string> SplitResponseWords(string response)
+        {
+            String[] mass = new String[5];
+            mass[0] = SEPARATE_STRING;
+            mass[1] = SEPARATE_STRING4;
+            mass[2] = SEPARATE_STRING5;
+            mass[3] = SEPARATE_STRING2;
+            mass[4] = SEPARATE_STRING3;
+
+            return response.Split(mass, StringSplitOptions.None).ToList();
         }
 
         public bool ValidateLocale(string namelocale)
         {
             namelocale = namelocale.ToLower();
-            if ( namelocale.Contains("-") == true)
+            if (namelocale.Contains("-") == true)
             {
                 return _ignoreLocale.ContainsKey(namelocale);
             }
@@ -187,21 +204,22 @@ namespace EqualchanceGames.Tools.InterfaceTranslate
         private string RequestToGoogleApi(string sourceText, string sourceLanguage, string targetLanguage, string key = null)
         {
             string translationFromGoogle = "";
+            string encodedText = WebUtility.UrlEncode(sourceText);
 
             string url = string.Empty;
-            if ( key == null )
-			{
+            if (key == null)
+            {
                 url = string.Format("https://translate.googleapis.com/translate_a/single?client=gtx&sl={0}&tl={1}&dt=t&q={2}",
                                                 sourceLanguage,
                                                 targetLanguage,
-                                                sourceText);
+                                                encodedText);
             }
             else
-			{
+            {
                 url = string.Format("https://translate.googleapis.com/translate_a/single?client=gtx&sl={0}&tl={1}&dt=t&q={2}&key={3}",
                                                 sourceLanguage,
                                                 targetLanguage,
-                                                sourceText,
+                                                encodedText,
                                                 key);
             }
 
