@@ -5,9 +5,9 @@ This tool allows you to translate the game into other languages, using free goog
 
 ## Where to begin?
 You can get the plugin through the unity package manager using the link:
-https://github.com/MaksymHernets/AutoTranslateForUnityLocalization.git?path=/Assets
+https://github.com/Gurawa/AutoTranslateForUnityLocalization.git?path=/Assets
 
-Also, this plugin can be found on the unity asset store, here is the link:  
+Also, this plugin (without the fixes) can be found on the unity asset store, here is the link:  
 https://assetstore.unity.com/packages/tools/localization/auto-translate-for-unity-localization-212842
 
 ## Functions currently available:
