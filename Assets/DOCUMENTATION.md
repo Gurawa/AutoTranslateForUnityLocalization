@@ -16,7 +16,7 @@ This User Guide was designed to provide AutoTranslate users with a basic overvie
 Once you have downloaded AutoTranslate from Unity’s Asset Store, go to: “Assets->Import Package->Custom Package...”. In the Import Asset window, find and select the AutoTranslate. unitypackage file. After the “Importing package” window appears in Unity, verify that all items to import are selected and then click the Import button in the bottom right of the window.
 
 You can get the plugin through the unity package manager using the link   
-"https://github.com/MaksymHernets/AutoTranslateForUnityLocalization.git?path=/Assets"
+"https://github.com/Gurawa/AutoTranslateForUnityLocalization.git?path=/Assets"
 
 ## Quick Start
 Use 'Window->Asset Management->Auto Translate for Tables' to begin working with the system.

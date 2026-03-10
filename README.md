@@ -42,7 +42,7 @@ https://assetstore.unity.com/packages/tools/localization/auto-translate-for-unit
 - Add unit tests.
 
 ### What's new?  
-https://github.com/MaksymHernets/AutoTranslateForUnityLocalization/blob/master/Assets/CHANGELOG.md
+https://github.com/Gurawa/AutoTranslateForUnityLocalization/blob/master/Assets/CHANGELOG.md
 
 ## Screenshots
 
