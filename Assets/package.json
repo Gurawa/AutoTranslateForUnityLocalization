@@ -1,8 +1,8 @@
 {
-    "name": "com.maksymhernets.autotranslateforunitylocalization",
+    "name": "com.gurawa.autotranslateforunitylocalization",
     "displayName": "Auto Translate for Unity Localization",
-    "version": "0.4.9",
-	"author": "Hernets Maksym",
+    "version": "0.5.0",
+	"author": "Aaditya Gurawa",
 	"license": "ISC",
     	"unity": "2023.2",
 	"category": "Tool",
@@ -19,7 +19,7 @@
     },
     "repository": 
     { 
-		"url": "https://github.com/MaksymHernets/AutoTranslateForUnityLocalization.git",
+		"url": "https://github.com/Gurawa/AutoTranslateForUnityLocalization.git",
 		"type": "git",
 		"directory": "Assets"
 	},
@@ -37,6 +37,6 @@
 	],
 	"_upm": 
 	{
-		"changelog": "### Added\n- Added ability Undo for AutoTranslate, Search and CleanUp\n### Changed\n- Updated Addressables into 1.21.14 and remove ai.navigation\n### Fixed\n- Fixed some bug guipro"
+		"changelog": "### Fixed\n- Fixed Google free API fallback handling so translated words are collected correctly after batch and fallback requests.\n- Fixed saving empty translation results by skipping null or empty values before adding localization entries."
 	}
 }

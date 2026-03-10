@@ -19,7 +19,11 @@ https://assetstore.unity.com/packages/tools/localization/auto-translate-for-unit
 - Tutorial scene.
 
 ## Known issues and how to solve them
-- During automatic translation, an error occurs or the result is empty. The solution is to select the option to translate one entity at a time, rather than the entire table at once. This way, the process takes longer, but the result is accurate, but free attempts end faster.
+- AutoLocalization_MenuItems.cs must be modified to fix error regarding submenu 
+```
+public const string MainDomainNameMenuItem = "Tools/Auto Localization";
+#Other menu tabs like 'Window' etc could also be used
+```
 - Cannot find text in disabled objects. Enable objects before searching.
 - The checklist for selecting to add localization does not work correctly.
 - The search or translation result is not saved in tables after the project is closed.
@@ -42,7 +46,7 @@ https://assetstore.unity.com/packages/tools/localization/auto-translate-for-unit
 - Add unit tests.
 
 ### What's new?  
-https://github.com/MaksymHernets/AutoTranslateForUnityLocalization/blob/master/Assets/CHANGELOG.md
+https://github.com/Gurawa/AutoTranslateForUnityLocalization/blob/master/Assets/CHANGELOG.md
 
 ## Screenshots
 

@@ -1,34 +1,59 @@
 # Auto Translate for Unity Localization
-## Release 0.3.9 - Aug 2022
-Copyright (C) 2022 Hernets Maksym - All Rights Reserved
+
+## Release 0.5.0 - Mar 2026
 
 Getting Started:
--Overview  
--Installation  
--Quick Start  
--Requirement  
--Warning  
+
+- Overview
+- Installation
+- Quick Start
+- Requirements
+- Warnings
 
 ## Overview
-This User Guide was designed to provide AutoTranslate users with a basic overview of the features and functionality of the tool.
 
-## Overview
-Once you have downloaded AutoTranslate from Unity’s Asset Store, go to: “Assets->Import Package->Custom Package...”. In the Import Asset window, find and select the AutoTranslate. unitypackage file. After the “Importing package” window appears in Unity, verify that all items to import are selected and then click the Import button in the bottom right of the window.
+This guide provides a basic overview of the main features and setup flow for Auto Translate for Unity Localization.
 
-You can get the plugin through the unity package manager using the link   
-"https://github.com/MaksymHernets/AutoTranslateForUnityLocalization.git?path=/Assets"
+## Installation
+
+You can install the package through Unity Package Manager using this Git URL:
+
+`https://github.com/Gurawa/AutoTranslateForUnityLocalization.git?path=/Assets`
+
+If you are using a `.unitypackage`, import it through `Assets -> Import Package -> Custom Package...`, verify the included files, and then confirm the import.
 
 ## Quick Start
-Use 'Window->Asset Management->Auto Translate for Tables' to begin working with the system.
 
-## Requirement
-This plugin is designed for the fact that your project has already implemented such packages as addressable and localization from unity.
+Use `Auto Localization/Auto Translate for String Tables` to open the main translation window.
 
-## Warning
-The plugin is at the release version and does not contain unit tests, so you may encounter errors in the plugin.
+Other available menu entries include:
 
+- `Auto Localization/Search Text in Scene or Prefab`
+- `Auto Localization/Search Text in Scenes`
+- `Auto Localization/Search Text in Prefabs`
+- `Auto Localization/Search Audio`
+- `Auto Localization/Search Texture`
+- `Auto Localization/Clean up Localization in Scenes`
+- `Auto Localization/Clean up Localization in Prefabs`
 
+## Requirements
 
+This package expects Unity Localization and Addressables to be available in the project.
 
+Current package dependencies:
 
+- Localization `1.4.5`
+- Addressables `1.21.21`
+- TextMeshPro `3.0.6`
 
+Recommended Unity version:
+
+- Unity `2023.2` or newer in the current package configuration.
+
+## Warnings
+
+The package still has some known limitations:
+
+- Disabled objects are not included in text search results.
+- Some checklist selection workflows may still behave inconsistently.
+- Translation or search results may not be saved if the project is closed before the operation finishes.
