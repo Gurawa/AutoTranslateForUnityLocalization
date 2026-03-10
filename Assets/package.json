@@ -1,8 +1,8 @@
 {
-    "name": "com.maksymhernets.autotranslateforunitylocalization",
+    "name": "com.gurawa.autotranslateforunitylocalization",
     "displayName": "Auto Translate for Unity Localization",
     "version": "0.4.9",
-	"author": "Hernets Maksym",
+	"author": "Gurawa",
 	"license": "ISC",
     	"unity": "2023.2",
 	"category": "Tool",
@@ -19,7 +19,7 @@
     },
     "repository": 
     { 
-		"url": "https://github.com/MaksymHernets/AutoTranslateForUnityLocalization.git",
+		"url": "https://github.com/Gurawa/AutoTranslateForUnityLocalization.git",
 		"type": "git",
 		"directory": "Assets"
 	},
